@@ -27,7 +27,7 @@ export default async function TodoList() {
       <div className="flex flex-col gap-4">
         <img src="/img/todo.svg" alt="todo" className="self-start" />
         <div className="flex flex-col gap-4">
-          {uncompletedItems.map((item: any) => (
+          {uncompletedItems.map((item) => (
             <CheckList
               key={item.id}
               id={item.id}
@@ -41,7 +41,7 @@ export default async function TodoList() {
       <div className="flex flex-col gap-4">
         <img src="/img/done.svg" alt="todo" className="self-start" />
         <div className="flex flex-col gap-4">
-          {completedItems.map((item: any) => (
+          {completedItems.map((item) => (
             <CheckList
               key={item.id}
               id={item.id}

@@ -103,7 +103,7 @@ export default function Page() {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      const res: any = await fetch(
+      const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/${TENANT_ID}/items/${itemId}`
       );
 
