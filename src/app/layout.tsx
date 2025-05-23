@@ -25,11 +25,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <GNB />
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col h-screen`}
       >
-        {children}
+        <GNB />
+        <div className="flex justify-center grow">
+          <div className="flex flex-col gap-10 xl:max-w-[1280px] w-full">
+            {children}
+          </div>
+        </div>
       </body>
     </html>
   );
