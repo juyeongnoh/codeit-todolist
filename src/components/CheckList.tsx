@@ -2,6 +2,7 @@
 
 import { TENANT_ID } from "@/app/constants/tenant_id";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 type CheckListProps = {
   id: string;
@@ -10,6 +11,8 @@ type CheckListProps = {
 };
 
 export default function CheckList({ id, label, checked }: CheckListProps) {
+  const router = useRouter();
+
   const checkTodo = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -27,7 +30,7 @@ export default function CheckList({ id, label, checked }: CheckListProps) {
       }),
     });
 
-    location.reload();
+    router.refresh();
   };
 
   return (

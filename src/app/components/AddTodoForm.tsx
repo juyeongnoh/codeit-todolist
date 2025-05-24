@@ -4,9 +4,11 @@ import AddButton from "@/components/AddButton";
 import Search from "@/components/Search";
 import { useState } from "react";
 import { TENANT_ID } from "../constants/tenant_id";
+import { useRouter } from "next/navigation";
 
 export default function AddTodoForm() {
   const [text, setText] = useState("");
+  const router = useRouter();
 
   const addTodo = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,7 +23,7 @@ export default function AddTodoForm() {
       }),
     });
 
-    location.reload();
+    router.refresh();
   };
 
   return (
