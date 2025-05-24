@@ -2,10 +2,10 @@
 
 import { TENANT_ID } from "@/app/constants/tenant_id";
 import CheckListDetail from "@/components/CheckListDetail";
+import DeleteButton from "@/components/DeleteButton";
+import EditButton from "@/components/EditButton";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-
-const CUSTOM_SHADOW = "shadow-[4px_3.5px_0px_0_#0F172A]";
 
 export default function Page() {
   const { itemId } = useParams();
@@ -225,22 +225,9 @@ export default function Page() {
       </div>
 
       <div className="flex gap-4 lg:justify-end justify-center">
-        <button
-          className={`flex gap-0.5 justify-center items-center border-2 border-slate-900 rounded-3xl w-40 h-14 disabled:bg-slate-200 bg-lime-300 font-bold ${CUSTOM_SHADOW}`}
-          onClick={handleClickEdit}
-          disabled={!isModified}
-        >
-          <img src="/ic/check.svg" alt="check" />
-          <span>수정 완료</span>
-        </button>
+        <EditButton onClick={handleClickEdit} disabled={!isModified} />
 
-        <button
-          className={`flex gap-0.5 text-white justify-center items-center border-2 border-slate-900 rounded-3xl w-40 h-14 bg-rose-500 font-bold ${CUSTOM_SHADOW}`}
-          onClick={handleClickDelete}
-        >
-          <img src="/ic/X.svg" alt="check" />
-          <span>삭제하기</span>
-        </button>
+        <DeleteButton onClick={handleClickDelete} />
       </div>
     </div>
   );

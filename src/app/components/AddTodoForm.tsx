@@ -29,7 +29,7 @@ export default function AddTodoForm() {
   return (
     <form className="flex gap-4 items-center" onSubmit={addTodo}>
       <Search value={text} onChange={(e) => setText(e.target.value)} />
-      <AddButton type="submit" />
+      <AddButton type="submit" disabled={text.length === 0} />
     </form>
   );
 }
