@@ -20,6 +20,18 @@ export default function Page() {
   const [imagePreview, setImagePreview] = useState("");
   const [file, setFile] = useState<File | null>(null);
 
+  const originalData = useRef({
+    name: "",
+    isCompleted: false,
+    memo: "",
+  });
+
+  const isModified =
+    originalData.current.name !== name ||
+    originalData.current.isCompleted !== isCompleted ||
+    originalData.current.memo !== memo ||
+    file !== null;
+
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleClickEdit = async () => {
@@ -84,12 +96,11 @@ export default function Page() {
         alert("파일 크기는 5MB를 초과할 수 없습니다.");
         return;
       }
+
       if (!file.type.startsWith("image/")) {
         alert("이미지 파일만 업로드할 수 있습니다.");
         return;
       }
-      // 파일 이름은 영어만 가능
-      // 공백 제외
 
       if (!/^[a-zA-Z0-9_.-]+$/.test(file.name)) {
         alert("파일 이름은 영어만 가능합니다.");
@@ -115,6 +126,12 @@ export default function Page() {
       setMemo(data.memo || "");
       setImagePreview(data.imageUrl);
       setIsLoading(false);
+
+      originalData.current = {
+        name: data.name,
+        isCompleted: data.isCompleted,
+        memo: data.memo || "",
+      };
     };
 
     fetchData();
@@ -206,8 +223,9 @@ export default function Page() {
 
       <div className="flex gap-4 lg:justify-end justify-center">
         <button
-          className={`flex gap-0.5 justify-center items-center border-2 border-slate-900 rounded-3xl w-40 h-14 bg-slate-200 font-bold ${CUSTOM_SHADOW}`}
+          className={`flex gap-0.5 justify-center items-center border-2 border-slate-900 rounded-3xl w-40 h-14 disabled:bg-slate-200 bg-lime-300 font-bold ${CUSTOM_SHADOW}`}
           onClick={handleClickEdit}
+          disabled={!isModified}
         >
           <img src="/ic/check.svg" alt="check" />
           <span>수정 완료</span>
