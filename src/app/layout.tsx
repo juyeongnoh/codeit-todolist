@@ -1,16 +1,21 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import GNB from "@/components/GNB";
+import localFont from "next/font/local";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const nanumSquare = localFont({
+  src: [
+    {
+      path: "../../public/fonts/NanumSquareB.otf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/NanumSquareB.otf",
+      weight: "700",
+      style: "normal",
+    },
+  ],
 });
 
 export const metadata: Metadata = {
@@ -26,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col h-screen`}
+        className={`${nanumSquare.className} antialiased flex flex-col h-screen`}
       >
         <GNB />
         <div className="flex justify-center grow">
