@@ -9,7 +9,10 @@ type Item = {
 
 export default async function TodoList() {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/${TENANT_ID}/items?page=1&pageSize=10`
+    `${process.env.NEXT_PUBLIC_API_URL}/${TENANT_ID}/items?page=1&pageSize=10`,
+    {
+      cache: "no-store",
+    }
   );
 
   const items: Item[] = await res.json();

@@ -115,7 +115,10 @@ export default function Page() {
     const fetchData = async () => {
       setIsLoading(true);
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/${TENANT_ID}/items/${itemId}`
+        `${process.env.NEXT_PUBLIC_API_URL}/${TENANT_ID}/items/${itemId}`,
+        {
+          cache: "no-store",
+        }
       );
 
       const data = await res.json();
