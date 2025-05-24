@@ -1,27 +1,22 @@
-import CheckList from "@/components/CheckList";
-import { TENANT_ID } from "../constants/tenant_id";
+"use client";
 
-type Item = {
+import CheckList from "@/components/CheckList";
+
+type TodoItem = {
   id: string;
   name: string;
   isCompleted: boolean;
 };
 
-export default async function TodoList() {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/${TENANT_ID}/items?page=1&pageSize=10`
-  );
+interface TodoListProps {
+  completedItems: TodoItem[];
+  uncompletedItems: TodoItem[];
+}
 
-  const items: Item[] = await res.json();
-
-  const completedItems = items.filter(
-    (item: Item) => item.isCompleted === true
-  );
-
-  const uncompletedItems = items.filter(
-    (item: Item) => item.isCompleted === false
-  );
-
+export default function TodoList({
+  completedItems,
+  uncompletedItems,
+}: TodoListProps) {
   return (
     <div className="grid gap-12 lg:grid-cols-2">
       <div className="flex flex-col gap-4">
