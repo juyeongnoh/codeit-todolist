@@ -8,6 +8,7 @@ import EditButton from "@/components/EditButton";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
+import { ClipLoader } from "react-spinners";
 
 export default function Page() {
   const { itemId } = useParams();
@@ -179,7 +180,11 @@ export default function Page() {
   }, [file]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex items-center justify-center h-full">
+        <ClipLoader />
+      </div>
+    );
   }
 
   return (

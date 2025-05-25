@@ -6,6 +6,7 @@ import Search from "@/components/Search";
 import AddButton from "@/components/AddButton";
 import CheckList from "@/components/CheckList";
 import toast from "react-hot-toast";
+import { ClipLoader } from "react-spinners";
 
 type TodoItem = {
   id: string;
@@ -16,6 +17,7 @@ type TodoItem = {
 export default function Home() {
   const [items, setItems] = useState<TodoItem[]>([]);
   const [input, setInput] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const completedItems: TodoItem[] = items.filter(
     (item) => item.isCompleted === true
@@ -26,6 +28,8 @@ export default function Home() {
   );
 
   const fetchData = async () => {
+    setIsLoading(true);
+
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/${TENANT_ID}/items`,
       {
@@ -37,6 +41,13 @@ export default function Home() {
     );
     const data = await res.json();
 
+    if (!res.ok) {
+      toast.error("할 일을 불러오는 데 실패했습니다.");
+      setIsLoading(false);
+      return;
+    }
+
+    setIsLoading(false);
     setItems(data);
   };
 
@@ -105,67 +116,73 @@ export default function Home() {
         <AddButton type="submit" disabled={input.length === 0} />
       </form>
 
-      <div className="grid gap-12 lg:grid-cols-2">
-        <div className="flex flex-col gap-4">
-          <img src="/img/todo.svg" alt="todo" className="self-start" />
-          <div className="flex flex-col gap-4">
-            {uncompletedItems.length > 0 ? (
-              uncompletedItems.map((item) => (
-                <CheckList
-                  key={item.id}
-                  id={item.id}
-                  name={item.name}
-                  isCompleted={item.isCompleted}
-                  checkTodo={checkTodo}
-                />
-              ))
-            ) : (
-              <div className="flex flex-col items-center justify-center gap-4 lg:mt-12">
-                <img
-                  src="/img/empty-todo-fallback.svg"
-                  alt="empty todo"
-                  className="sm:w-[240px] w-[120px]"
-                />
-                <div className="text-center font-bold text-slate-400">
-                  할 일이 없어요.
-                  <br />
-                  TODO를 새롭게 추가해주세요!
-                </div>
-              </div>
-            )}
-          </div>
+      {isLoading ? (
+        <div className="flex justify-center">
+          <ClipLoader />
         </div>
+      ) : (
+        <div className="grid gap-12 lg:grid-cols-2">
+          <div className="flex flex-col gap-4">
+            <img src="/img/todo.svg" alt="todo" className="self-start" />
+            <div className="flex flex-col gap-4">
+              {uncompletedItems.length > 0 ? (
+                uncompletedItems.map((item) => (
+                  <CheckList
+                    key={item.id}
+                    id={item.id}
+                    name={item.name}
+                    isCompleted={item.isCompleted}
+                    checkTodo={checkTodo}
+                  />
+                ))
+              ) : (
+                <div className="flex flex-col items-center justify-center gap-4 lg:mt-12">
+                  <img
+                    src="/img/empty-todo-fallback.svg"
+                    alt="empty todo"
+                    className="sm:w-[240px] w-[120px]"
+                  />
+                  <div className="text-center font-bold text-slate-400">
+                    할 일이 없어요.
+                    <br />
+                    TODO를 새롭게 추가해주세요!
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
 
-        <div className="flex flex-col gap-4">
-          <img src="/img/done.svg" alt="todo" className="self-start" />
           <div className="flex flex-col gap-4">
-            {completedItems.length > 0 ? (
-              completedItems.map((item) => (
-                <CheckList
-                  key={item.id}
-                  id={item.id}
-                  name={item.name}
-                  isCompleted={item.isCompleted}
-                  checkTodo={checkTodo}
-                />
-              ))
-            ) : (
-              <div className="flex flex-col items-center justify-center gap-4 lg:mt-12">
-                <img
-                  src="/img/empty-done-fallback.svg"
-                  alt="empty todo"
-                  className="sm:w-[240px] w-[120px]"
-                />
-                <div className="text-center font-bold text-slate-400">
-                  아직 다 한 일이 없어요.
-                  <br />
-                  해야 할 일을 체크해보세요!
+            <img src="/img/done.svg" alt="todo" className="self-start" />
+            <div className="flex flex-col gap-4">
+              {completedItems.length > 0 ? (
+                completedItems.map((item) => (
+                  <CheckList
+                    key={item.id}
+                    id={item.id}
+                    name={item.name}
+                    isCompleted={item.isCompleted}
+                    checkTodo={checkTodo}
+                  />
+                ))
+              ) : (
+                <div className="flex flex-col items-center justify-center gap-4 lg:mt-12">
+                  <img
+                    src="/img/empty-done-fallback.svg"
+                    alt="empty todo"
+                    className="sm:w-[240px] w-[120px]"
+                  />
+                  <div className="text-center font-bold text-slate-400">
+                    아직 다 한 일이 없어요.
+                    <br />
+                    해야 할 일을 체크해보세요!
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
