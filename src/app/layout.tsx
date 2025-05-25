@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import GNB from "@/components/GNB";
 import localFont from "next/font/local";
+import { Toaster } from "react-hot-toast";
 
 const nanumSquare = localFont({
   src: [
@@ -13,7 +14,7 @@ const nanumSquare = localFont({
     {
       path: "../../public/fonts/NanumSquareB.otf",
       weight: "700",
-      style: "normal",
+      style: "bold",
     },
   ],
 });
@@ -33,6 +34,7 @@ export default function RootLayout({
       <body
         className={`${nanumSquare.className} antialiased flex flex-col h-screen`}
       >
+        <Toaster />
         <GNB />
         <div className="flex justify-center grow">
           <div className="flex flex-col gap-10 xl:max-w-[1280px] w-full">

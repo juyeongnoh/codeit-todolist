@@ -7,6 +7,7 @@ import DeleteButton from "@/components/DeleteButton";
 import EditButton from "@/components/EditButton";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
 
 export default function Page() {
   const { itemId } = useParams();
@@ -37,7 +38,7 @@ export default function Page() {
 
   const handleClickEdit = async () => {
     const confirm = window.confirm("수정하시겠습니까?");
-    let imageUrl;
+    let imageUrl: string = "";
 
     if (!confirm) {
       return;
@@ -59,20 +60,31 @@ export default function Page() {
       imageUrl = data.url;
     }
 
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${TENANT_ID}/items/${id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
+    toast.promise(
+      async () => {
+        await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/${TENANT_ID}/items/${id}`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name,
+              memo,
+              imageUrl,
+              isCompleted,
+            }),
+          }
+        );
+        fetchData();
       },
-      body: JSON.stringify({
-        name,
-        memo,
-        imageUrl,
-        isCompleted,
-      }),
-    });
-
-    location.reload();
+      {
+        loading: "수정 중...",
+        success: "수정되었습니다.",
+        error: "수정에 실패했습니다.",
+      }
+    );
   };
 
   const handleClickDelete = async () => {
@@ -82,11 +94,22 @@ export default function Page() {
       return;
     }
 
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${TENANT_ID}/items/${id}`, {
-      method: "DELETE",
-    });
-
-    router.push("/");
+    toast.promise(
+      async () => {
+        await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/${TENANT_ID}/items/${id}`,
+          {
+            method: "DELETE",
+          }
+        );
+        router.push("/");
+      },
+      {
+        loading: "삭제 중...",
+        success: "삭제되었습니다.",
+        error: "삭제에 실패했습니다.",
+      }
+    );
   };
 
   const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -112,32 +135,32 @@ export default function Page() {
     }
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/${TENANT_ID}/items/${itemId}`,
-        {
-          cache: "no-store",
-        }
-      );
+  const fetchData = async () => {
+    setIsLoading(true);
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/${TENANT_ID}/items/${itemId}`,
+      {
+        cache: "no-store",
+      }
+    );
 
-      const data = await res.json();
+    const data = await res.json();
 
-      setId(data.id);
-      setName(data.name);
-      setIsCompleted(data.isCompleted);
-      setMemo(data.memo || "");
-      setImagePreview(data.imageUrl);
-      setIsLoading(false);
+    setId(data.id);
+    setName(data.name);
+    setIsCompleted(data.isCompleted);
+    setMemo(data.memo || "");
+    setImagePreview(data.imageUrl);
+    setIsLoading(false);
 
-      originalData.current = {
-        name: data.name,
-        isCompleted: data.isCompleted,
-        memo: data.memo || "",
-      };
+    originalData.current = {
+      name: data.name,
+      isCompleted: data.isCompleted,
+      memo: data.memo || "",
     };
+  };
 
+  useEffect(() => {
     fetchData();
   }, [itemId]);
 
