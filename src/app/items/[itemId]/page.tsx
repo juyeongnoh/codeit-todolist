@@ -1,5 +1,6 @@
 "use client";
 
+import { ALLOWED_FILE_NAME_REGEX, MAX_FILE_SIZE } from "@/app/constants/policy";
 import { TENANT_ID } from "@/app/constants/tenant_id";
 import CheckListDetail from "@/components/CheckListDetail";
 import DeleteButton from "@/components/DeleteButton";
@@ -13,11 +14,11 @@ export default function Page() {
 
   const [isLoading, setIsLoading] = useState(true);
 
-  const [id, setId] = useState("");
-  const [name, setName] = useState("");
-  const [isCompleted, setIsCompleted] = useState(false);
-  const [memo, setMemo] = useState("");
-  const [imagePreview, setImagePreview] = useState("");
+  const [id, setId] = useState<string>("");
+  const [name, setName] = useState<string>("");
+  const [isCompleted, setIsCompleted] = useState<boolean>(false);
+  const [memo, setMemo] = useState<string>("");
+  const [imagePreview, setImagePreview] = useState<string>("");
   const [file, setFile] = useState<File | null>(null);
 
   const originalData = useRef({
@@ -92,7 +93,7 @@ export default function Page() {
     const file = e.target.files?.[0];
 
     if (file) {
-      if (file.size > 5 * 1024 * 1024) {
+      if (file.size > MAX_FILE_SIZE) {
         alert("파일 크기는 5MB를 초과할 수 없습니다.");
         return;
       }
@@ -102,7 +103,7 @@ export default function Page() {
         return;
       }
 
-      if (!/^[a-zA-Z0-9_.-]+$/.test(file.name)) {
+      if (!ALLOWED_FILE_NAME_REGEX.test(file.name)) {
         alert("파일 이름은 영어만 가능합니다.");
         return;
       }
