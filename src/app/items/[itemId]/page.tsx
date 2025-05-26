@@ -1,3 +1,12 @@
+/**
+ * 상세 보기 페이지
+ * 할 일 항목의 상세 정보를 보여주고 수정 및 삭제 기능을 제공합니다.
+ *
+ * 특이사항
+ * - 이미지 업로드 시 파일 크기와 형식을 검증합니다.
+ * - 최초 상태와 수정된 상태를 비교하여 수정 버튼의 활성화 여부를 결정합니다. (리렌더링 방지를 위해 ref 사용)
+ */
+
 "use client";
 
 import { ALLOWED_FILE_NAME_REGEX, MAX_FILE_SIZE } from "@/app/constants/policy";
@@ -39,7 +48,7 @@ export default function Page() {
 
   const handleClickEdit = async () => {
     const confirm = window.confirm("수정하시겠습니까?");
-    let imageUrl: string = "";
+    let imageUrl: string | undefined = undefined;
 
     if (!confirm) {
       return;
@@ -78,6 +87,8 @@ export default function Page() {
             }),
           }
         );
+        setFile(null);
+        setImagePreview(imageUrl || "");
         fetchData();
       },
       {
@@ -161,10 +172,12 @@ export default function Page() {
     };
   };
 
+  // 컴포넌트가 마운트될 때와 itemId가 변경될 때마다 데이터를 가져옵니다.
   useEffect(() => {
     fetchData();
   }, [itemId]);
 
+  // file이 변경될 때마다 새로운 이미지 미리보기 생성하고, 컴포넌트 언마운트 시 정리합니다.
   useEffect(() => {
     const blobUrl = file ? URL.createObjectURL(file) : null;
 

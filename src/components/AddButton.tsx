@@ -1,3 +1,10 @@
+/**
+ * AddButton
+ * 메인 페이지에서 사용하는 "추가하기" 버튼 컴포넌트입니다.
+ */
+
+"use client";
+
 export default function AddButton({
   ...props
 }: React.ButtonHTMLAttributes<HTMLButtonElement>) {

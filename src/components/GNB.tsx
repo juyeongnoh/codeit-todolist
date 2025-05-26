@@ -1,3 +1,8 @@
+/**
+ * GNB
+ * 전역 네비게이션 바 컴포넌트입니다.
+ */
+
 "use client";
 
 import Link from "next/link";

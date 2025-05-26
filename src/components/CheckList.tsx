@@ -1,3 +1,8 @@
+/**
+ * CheckList
+ * 메인 페이지에서 Todo 아이템을 보여주는 컴포넌트입니다.
+ */
+
 "use client";
 
 import Link from "next/link";

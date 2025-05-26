@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TODO LIST
 
-## Getting Started
+코드잇 스프린트 프론트엔드 단기심화 과정 지원자 과제
 
-First, run the development server:
+## 배포 링크
+
+https://codeit-todolist-two.vercel.app/
+
+## 실행하기
 
 ```bash
+git clone https://github.com/juyeongnoh/codeit-todolist.git
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 기능 설명
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 메인 페이지
 
-## Learn More
+<img width="1276" alt="Image" src="https://github.com/user-attachments/assets/fd7872de-e280-41e6-ae62-2d617183499d" />
 
-To learn more about Next.js, take a look at the following resources:
+- 상단 입력 창에 텍스트를 입력하고 `추가하기` 버튼을 클릭하거나 엔터를 치면 할 일이 생성됩니다.
+- 생성된 할 일 항목의 왼쪽 버튼을 클릭하면 상태가 변경됩니다.
+- 생성된 할 일 항목의 이름 영역을 클릭하면 상세보기 페이지로 이동합니다.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 상세보기 페이지
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+<img width="1273" alt="Image" src="https://github.com/user-attachments/assets/6fff7979-d561-4168-8e5f-154970a0e151" />
 
-## Deploy on Vercel
+- 할 일 항목 이름을 수정할 수 있습니다.
+- 메모를 추가할 수 있습니다.
+- 이미지(최대 1개)를 추가할 수 있습니다.
+  - 이미지 파일 이름은 영어로만 이루어져야 하고, 5MB 이하여야 합니다.
+- `수정 완료` 버튼을 클릭하면 변경 사항이 반영됩니다.
+- `삭제하기` 버튼을 클릭하면 할 일이 삭제되고, 할 일 목록 페이지로 이동합니다.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 기술 스택
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Next.js
+- TypeScript

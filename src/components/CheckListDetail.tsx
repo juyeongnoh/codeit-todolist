@@ -1,3 +1,12 @@
+/**
+ * CheckListDetail
+ * 상세 보기 페이지에서 제목과 완료 여부를 표시하는 컴포넌트입니다.
+ *
+ * 특이사항
+ * - 부모로부터 setter 함수를 받아와서 상태를 변경합니다.
+ * - 제목이 변경될 때마다 input 요소의 너비를 자동으로 조정하기 위해 span 요소의 너비를 참조합니다.
+ */
+
 "use client";
 
 import { useEffect, useRef } from "react";
