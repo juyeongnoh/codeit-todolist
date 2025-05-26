@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-type CheckListProps = {
+type CheckListDetailProps = {
   name: string;
   setName: React.Dispatch<React.SetStateAction<string>>;
   isCompleted: boolean;
@@ -14,7 +14,7 @@ export default function CheckListDetail({
   setName,
   isCompleted,
   setIsCompleted,
-}: CheckListProps) {
+}: CheckListDetailProps) {
   const spanRef = useRef<HTMLSpanElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 

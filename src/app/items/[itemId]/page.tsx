@@ -255,7 +255,6 @@ export default function Page() {
 
       <div className="flex gap-4 lg:justify-end justify-center">
         <EditButton onClick={handleClickEdit} disabled={!isModified} />
-
         <DeleteButton onClick={handleClickDelete} />
       </div>
     </div>

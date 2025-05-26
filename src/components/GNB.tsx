@@ -8,8 +8,8 @@ export default function GNB() {
       <div className="w-full sm:px-6 px-4 xl:max-w-[1280px]">
         <Link href="/">
           <picture className="inline-block">
-            <source media="(min-width: 640px)" srcSet="/logo/Size=Large.svg" />
-            <img src="/logo/Size=Small.svg" alt="logo" />
+            <source media="(min-width: 640px)" srcSet="/logo/logo-large.svg" />
+            <img src="/logo/logo-small.svg" alt="logo" />
           </picture>
         </Link>
       </div>
